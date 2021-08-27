@@ -3,7 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amalay.Entities", "Amalay.Entities\Amalay.Entities.csproj", "{708E7CC8-BD90-4EA0-AAE4-041A9018D9A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amalay.Framework", "Amalay.Framework\Amalay.Framework.csproj", "{A58D7DE1-E911-4EB8-B5D6-404FD8BA3BC0}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{708E7CC8-BD90-4EA0-AAE4-041A9018D9A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{708E7CC8-BD90-4EA0-AAE4-041A9018D9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{708E7CC8-BD90-4EA0-AAE4-041A9018D9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{708E7CC8-BD90-4EA0-AAE4-041A9018D9A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A58D7DE1-E911-4EB8-B5D6-404FD8BA3BC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A58D7DE1-E911-4EB8-B5D6-404FD8BA3BC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A58D7DE1-E911-4EB8-B5D6-404FD8BA3BC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A58D7DE1-E911-4EB8-B5D6-404FD8BA3BC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
