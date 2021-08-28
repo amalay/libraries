@@ -1,6 +1,8 @@
 ﻿using Amalay.Entities;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security;
 
@@ -8,6 +10,10 @@ namespace Amalay.Framework
 {
     public class Utility
     {
+        private string fileName = "Utility.cs";
+
+        #region "Singleton"
+
         private static readonly Utility instance = new Utility();
 
         private Utility() { }
@@ -19,6 +25,8 @@ namespace Amalay.Framework
                 return instance;
             }
         }
+
+        #endregion
 
         public string GetRandomNumberInRange()
         {
@@ -40,7 +48,94 @@ namespace Amalay.Framework
             }
 
             return securePassword;
-        }        
+        }
+
+        public List<string> GetPropertyNames(object instance)
+        {
+            var fields = new List<string>();
+
+            if (instance != null)
+            {
+                var properties = instance.GetType().GetProperties();
+
+                if (properties != null && properties.Length > 0)
+                {
+                    foreach (var property in properties)
+                    {
+                        fields.Add(property.Name);
+                    }
+                }
+            }
+
+            return fields;
+        }
+
+        public JObject ReadDataFromJsonFile(string root, string directoryName, string jsonFileName)
+        {
+            var functionName = "ReadDataFromJsonFile";
+            JObject jsonData = null;
+
+            try
+            {
+                if (string.IsNullOrEmpty(root))
+                {
+                    root = ".";
+                }
+
+                var filePath = Path.Combine(root, directoryName, jsonFileName);
+
+                if (File.Exists(filePath))
+                {
+                    var content = File.ReadAllText(filePath);
+
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        jsonData = JObject.Parse(content);
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            return jsonData;
+        }
+
+        public string ReadDataFromFile(string root, string directoryName, string fileName)
+        {
+            var functionName = "ReadDataFromFile";
+            var content = string.Empty;
+            var filePath = string.Empty;
+
+            try
+            {
+                if (string.IsNullOrEmpty(root))
+                {
+                    root = ".";
+                }
+
+                if (!string.IsNullOrEmpty(directoryName))
+                {
+                    filePath = Path.Combine(root, directoryName, fileName);
+                }
+                else
+                {
+                    filePath = Path.Combine(root, fileName);
+                }
+
+                if (File.Exists(filePath))
+                {
+                    content = File.ReadAllText(filePath);
+                }
+            }
+            catch
+            {
+                throw;
+            }
+
+            return content;
+        }
 
         public IDictionary<string, string> GetCustomerSettings(Setting setting, string searchKey)
         {
