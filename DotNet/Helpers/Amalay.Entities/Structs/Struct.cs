@@ -11,6 +11,23 @@ namespace Amalay.Entities
         public const string TestMessage = "Test Message!";
     }
 
+    public struct App
+    {
+        public const string Api = "Amalay.Api";
+        public const string SecureApi = "Amalay.SecureApi";
+        public const string SecureApiClient = "Amalay.SecureApiClient";
+        public const string Console = "Amalay.Console";
+        public const string Website = "Amalay.Website";
+        public const string Window = "Amalay.Window";
+        public const string WPF = "Amalay.WPF";
+        public const string UWP = "Amalay.UWP";
+        public const string KuberneteContainer = "Amalay.KuberneteContainer";
+        public const string AzureFunction = "Amalay.AzureFunction";
+        public const string ServiceFabric = "Amalay.AzureServiceFabric";
+        public const string ServiceFabricMesh = "Amalay.AzureServiceFabricMesh";
+        public const string Database = "Amalay.Database";
+    }
+
     public struct Salesforce
     {
         public const string ApiEndpoint = "services/data/";
@@ -57,5 +74,17 @@ namespace Amalay.Entities
         public const string DnsLookup = "DnsLookup";
         public const string GuestUser = "GuestUser";
         public const string UserSignInDetails = "UserSignInDetails";        
+    }
+
+    public struct StatusMessage
+    {
+        public const string SaveSuccess = "Data saved successfully!";
+        public const string SaveError = "Error occurred while saving the data!";
+
+        public const string UpdateSuccess = "Data updated successfully!";
+        public const string UpdateError = "Error occurred while updating the data!";
+
+        public const string SendSuccess = "Message send successfully!";
+        public const string SendError = "Error occurred while sending message!";
     }
 }
