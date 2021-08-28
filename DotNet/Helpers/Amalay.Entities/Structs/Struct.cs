@@ -76,6 +76,22 @@ namespace Amalay.Entities
         public const string UserSignInDetails = "UserSignInDetails";        
     }
 
+    public struct Status
+    {
+        public const string None = "None";
+        public const string NoRecordExist = "NoRecordExist";
+        public const string AlreadyExist = "AlreadyExist";
+        public const string Created = "Created";
+        public const string Updated = "Updated";
+        public const string Deleted = "Deleted";
+
+        public const string Success = "Success";
+        public const string Error = "Error";
+        public const string ApiCallError = "ApiCallError";
+        public const string Exception = "Exception";
+        public const string Oops = "Oops";
+    }
+
     public struct StatusMessage
     {
         public const string SaveSuccess = "Data saved successfully!";
