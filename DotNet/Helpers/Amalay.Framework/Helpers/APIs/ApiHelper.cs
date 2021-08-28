@@ -433,6 +433,50 @@ namespace Amalay.Framework
 
         #region "POST - SendAsync"
 
+        public async Task<ApiResponse<T>> ExecutePostRequest_SendAsync<T>(string endpoint, HttpContent httpContent)
+        {
+            if (string.IsNullOrEmpty(endpoint))
+            {
+                throw new Exception("Endpoint is not provided!");
+            }
+
+            if (httpContent != null)
+            {
+                throw new Exception("Payload is not provided!");
+            }
+
+            var apiResponse = new ApiResponse<T>();
+
+            using (var httpClient = new HttpClient())
+            {
+                using (HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, endpoint))
+                {
+                    request.Content = httpContent;
+
+                    using (var response = await httpClient.SendAsync(request))
+                    {
+                        var result = await response.Content.ReadAsStringAsync();
+
+                        if (typeof(T) == typeof(string))
+                        {
+                            apiResponse.Data = result.ConvertTo<T>();
+                        }
+                        else
+                        {
+                            apiResponse.Data = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(result);
+                        }
+
+                        apiResponse.IsSuccess = response.IsSuccessStatusCode;
+                        apiResponse.StatusCode = response.StatusCode;
+                        apiResponse.Message = response.ReasonPhrase;
+                        apiResponse.Endpoint = endpoint;
+                    }
+                }
+            }
+
+            return apiResponse;
+        }
+
         public async Task<ApiResponse<T>> ExecutePostRequest_SendAsync<T>(string endpoint, string payload)
         {
             if (string.IsNullOrEmpty(endpoint))
