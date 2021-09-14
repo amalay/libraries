@@ -127,7 +127,6 @@ namespace Amalay.Framework
             }
         }
 
-
         public async Task<int> ExecuteNonQueryAsync(string storedProcedureName, Collection<SqlParameter> parameters = null)
         {
             using (var sqlConnection = this.GetSqlConnection(true))
