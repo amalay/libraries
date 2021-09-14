@@ -69,74 +69,7 @@ namespace Amalay.Framework
 
             return fields;
         }
-
-        public JObject ReadDataFromJsonFile(string root, string directoryName, string jsonFileName)
-        {
-            var functionName = "ReadDataFromJsonFile";
-            JObject jsonData = null;
-
-            try
-            {
-                if (string.IsNullOrEmpty(root))
-                {
-                    root = ".";
-                }
-
-                var filePath = Path.Combine(root, directoryName, jsonFileName);
-
-                if (File.Exists(filePath))
-                {
-                    var content = File.ReadAllText(filePath);
-
-                    if (!string.IsNullOrEmpty(content))
-                    {
-                        jsonData = JObject.Parse(content);
-                    }
-                }
-            }
-            catch
-            {
-                throw;
-            }
-
-            return jsonData;
-        }
-
-        public string ReadDataFromFile(string root, string directoryName, string fileName)
-        {
-            var functionName = "ReadDataFromFile";
-            var content = string.Empty;
-            var filePath = string.Empty;
-
-            try
-            {
-                if (string.IsNullOrEmpty(root))
-                {
-                    root = ".";
-                }
-
-                if (!string.IsNullOrEmpty(directoryName))
-                {
-                    filePath = Path.Combine(root, directoryName, fileName);
-                }
-                else
-                {
-                    filePath = Path.Combine(root, fileName);
-                }
-
-                if (File.Exists(filePath))
-                {
-                    content = File.ReadAllText(filePath);
-                }
-            }
-            catch
-            {
-                throw;
-            }
-
-            return content;
-        }
-
+        
         public IDictionary<string, string> GetCustomerSettings(Setting setting, string searchKey)
         {
             var settings = new Dictionary<string, string>();
