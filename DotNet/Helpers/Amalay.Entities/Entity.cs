@@ -4,7 +4,9 @@ namespace Amalay.Entities
 {
     public class Entity
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+
+        public string Name { get; set; }
 
         public string LogType { get; set; }
 
