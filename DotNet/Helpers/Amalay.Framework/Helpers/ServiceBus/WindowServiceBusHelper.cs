@@ -1,5 +1,5 @@
 ﻿using Amalay.Entities;
-using Microsoft.ServiceBus.Messaging;
+//using Microsoft.ServiceBus.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,108 +30,108 @@ namespace Amalay.Framework
 
         #region "Public Methods"
 
-        public void CreateTopicAndSubscription(string topicName, string subscriptionName, string serviceBusConnectionString)
-        {
-            TopicDescription topicDescription = new TopicDescription(topicName);
-            topicDescription.MaxSizeInMegabytes = 5120;
-            topicDescription.DefaultMessageTimeToLive = new TimeSpan(0, 1, 0);
+        //public void CreateTopicAndSubscription(string topicName, string subscriptionName, string serviceBusConnectionString)
+        //{
+        //    TopicDescription topicDescription = new TopicDescription(topicName);
+        //    topicDescription.MaxSizeInMegabytes = 5120;
+        //    topicDescription.DefaultMessageTimeToLive = new TimeSpan(0, 1, 0);
 
-            var namespaceManager = Microsoft.ServiceBus.NamespaceManager.CreateFromConnectionString(serviceBusConnectionString);
+        //    var namespaceManager = Microsoft.ServiceBus.NamespaceManager.CreateFromConnectionString(serviceBusConnectionString);
 
-            if (!namespaceManager.TopicExists(topicName))
-            {
-                namespaceManager.CreateTopic(topicDescription);
-            }
+        //    if (!namespaceManager.TopicExists(topicName))
+        //    {
+        //        namespaceManager.CreateTopic(topicDescription);
+        //    }
 
-            if (!namespaceManager.SubscriptionExists(topicName, subscriptionName))
-            {
-                namespaceManager.CreateSubscription(topicName, subscriptionName, new SqlFilter(this.CreateFilter(subscriptionName)));
-            }
-        }
+        //    if (!namespaceManager.SubscriptionExists(topicName, subscriptionName))
+        //    {
+        //        namespaceManager.CreateSubscription(topicName, subscriptionName, new SqlFilter(this.CreateFilter(subscriptionName)));
+        //    }
+        //}
 
-        public Dictionary<string, object> InitialiseMessageHeader(string subscriptionName)
-        {
-            Dictionary<string, object> messageHeader = new Dictionary<string, object>();
+        //public Dictionary<string, object> InitialiseMessageHeader(string subscriptionName)
+        //{
+        //    Dictionary<string, object> messageHeader = new Dictionary<string, object>();
 
-            //required fields
-            messageHeader.Add("MessageId", Guid.NewGuid());
-            messageHeader.Add("MessageCorrelationId", Guid.NewGuid());
-            messageHeader.Add("MessageSentTime", DateTime.UtcNow);
+        //    //required fields
+        //    messageHeader.Add("MessageId", Guid.NewGuid());
+        //    messageHeader.Add("MessageCorrelationId", Guid.NewGuid());
+        //    messageHeader.Add("MessageSentTime", DateTime.UtcNow);
 
-            messageHeader.Add("RouteParam1", subscriptionName);
+        //    messageHeader.Add("RouteParam1", subscriptionName);
 
-            return messageHeader;
-        }
+        //    return messageHeader;
+        //}
 
-        public void SendMessageToServiceBus(string serviceBusConnectionString, string topicName, string jsonMessage, Dictionary<string, object> messageHeader)
-        {
-            var client = TopicClient.CreateFromConnectionString(serviceBusConnectionString, topicName);
+        //public void SendMessageToServiceBus(string serviceBusConnectionString, string topicName, string jsonMessage, Dictionary<string, object> messageHeader)
+        //{
+        //    var client = TopicClient.CreateFromConnectionString(serviceBusConnectionString, topicName);
 
-            var brokeredMessage = new BrokeredMessage(jsonMessage);
-            this.SetBrokeredMessageProperties(brokeredMessage, messageHeader);
+        //    var brokeredMessage = new BrokeredMessage(jsonMessage);
+        //    this.SetBrokeredMessageProperties(brokeredMessage, messageHeader);
 
-            client.Send(brokeredMessage);
-        }
+        //    client.Send(brokeredMessage);
+        //}
 
-        public void SendMessageToServiceBus<T>(string serviceBusConnectionString, string topicName, T messageInfo, Dictionary<string, object> messageHeader, JsonSerialiserType provider = JsonSerialiserType.NewtonsoftJsonSerializer)
-        {
-            var client = TopicClient.CreateFromConnectionString(serviceBusConnectionString, topicName);
+        //public void SendMessageToServiceBus<T>(string serviceBusConnectionString, string topicName, T messageInfo, Dictionary<string, object> messageHeader, JsonSerialiserType provider = JsonSerialiserType.NewtonsoftJsonSerializer)
+        //{
+        //    var client = TopicClient.CreateFromConnectionString(serviceBusConnectionString, topicName);
 
-            BrokeredMessage brokeredMessage = null;
+        //    BrokeredMessage brokeredMessage = null;
 
-            if (provider == JsonSerialiserType.DataContractJsonSerializer)
-            {
-                brokeredMessage = this.CreateBrokeredMessage(messageInfo, messageHeader, new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(T)));
-            }
-            else
-            {
-                brokeredMessage = this.CreateBrokeredMessage(messageInfo, messageHeader);
-            }
+        //    if (provider == JsonSerialiserType.DataContractJsonSerializer)
+        //    {
+        //        brokeredMessage = this.CreateBrokeredMessage(messageInfo, messageHeader, new System.Runtime.Serialization.Json.DataContractJsonSerializer(typeof(T)));
+        //    }
+        //    else
+        //    {
+        //        brokeredMessage = this.CreateBrokeredMessage(messageInfo, messageHeader);
+        //    }
 
-            client.Send(brokeredMessage);
-        }
+        //    client.Send(brokeredMessage);
+        //}
 
         #endregion
 
         #region "Private Methods"
 
-        private void SetBrokeredMessageProperties(BrokeredMessage brokeredMessage, IDictionary<string, object> msgProperties)
-        {
-            if (msgProperties != null)
-            {
-                foreach (var msgProperty in msgProperties)
-                {
-                    brokeredMessage.Properties.Add(msgProperty.Key, msgProperty.Value);
-                }
-            }
-        }
+        //private void SetBrokeredMessageProperties(BrokeredMessage brokeredMessage, IDictionary<string, object> msgProperties)
+        //{
+        //    if (msgProperties != null)
+        //    {
+        //        foreach (var msgProperty in msgProperties)
+        //        {
+        //            brokeredMessage.Properties.Add(msgProperty.Key, msgProperty.Value);
+        //        }
+        //    }
+        //}
 
-        private BrokeredMessage CreateBrokeredMessage<T>(T messageInfo, IDictionary<string, object> messageProperties)
-        {
-            string serialisedMessageInfo = Newtonsoft.Json.JsonConvert.SerializeObject(messageInfo);
+        //private BrokeredMessage CreateBrokeredMessage<T>(T messageInfo, IDictionary<string, object> messageProperties)
+        //{
+        //    string serialisedMessageInfo = Newtonsoft.Json.JsonConvert.SerializeObject(messageInfo);
 
-            var brokeredMessage = new BrokeredMessage(serialisedMessageInfo)
-            {
-                ContentType = "text/plain"
-            };
+        //    var brokeredMessage = new BrokeredMessage(serialisedMessageInfo)
+        //    {
+        //        ContentType = "text/plain"
+        //    };
 
-            this.SetBrokeredMessageProperties(brokeredMessage, messageProperties);
+        //    this.SetBrokeredMessageProperties(brokeredMessage, messageProperties);
 
-            return brokeredMessage;
-        }
+        //    return brokeredMessage;
+        //}
 
-        private BrokeredMessage CreateBrokeredMessage<T>(T messageInfo, IDictionary<string, object> messageProperties, System.Runtime.Serialization.Json.DataContractJsonSerializer serializer)
-        {
-            var brokeredMessage = new BrokeredMessage(messageInfo, serializer)
-            {
-                ContentType = typeof(T).AssemblyQualifiedName
-            };
+        //private BrokeredMessage CreateBrokeredMessage<T>(T messageInfo, IDictionary<string, object> messageProperties, System.Runtime.Serialization.Json.DataContractJsonSerializer serializer)
+        //{
+        //    var brokeredMessage = new BrokeredMessage(messageInfo, serializer)
+        //    {
+        //        ContentType = typeof(T).AssemblyQualifiedName
+        //    };
 
-            this.SetBrokeredMessageProperties(brokeredMessage, messageProperties);
+        //    this.SetBrokeredMessageProperties(brokeredMessage, messageProperties);
 
-            return brokeredMessage;
+        //    return brokeredMessage;
 
-        }
+        //}
 
         private string CreateFilter(string subscriptionName)
         {
